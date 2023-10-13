@@ -11,14 +11,14 @@ conn = sqlite3.connect('X:\DB\my_database.sqlite')
 
 cur = conn.cursor()
 
-# define input and output files
+# define file location
 
-output = "G:\My Drive\My Projects"
-input0 = "G:\My Drive\My Projects\Apple Store Dataset\Copy of AppleStore.csv"
-input1 = "G:\My Drive\My Projects\Apple Store Dataset\Copy of appleStore_description1.csv"
-input2 = "G:\My Drive\My Projects\Apple Store Dataset\Copy of appleStore_description2.csv"
-input3 = "G:\My Drive\My Projects\Apple Store Dataset\Copy of appleStore_description3.csv"
-input4 = "G:\My Drive\My Projects\Apple Store Dataset\Copy of appleStore_description4.csv"
+location = "X:\Local-Repo\SQL Demo\Apple Store Dataset"
+input0 = f"{location}\Copy of AppleStore.csv"
+input1 = f"{location}\Copy of appleStore_description1.csv"
+input2 = f"{location}\Copy of appleStore_description2.csv"
+input3 = f"{location}\Copy of appleStore_description3.csv"
+input4 = f"{location}\Copy of appleStore_description4.csv"
 
 #create an input list 
 
