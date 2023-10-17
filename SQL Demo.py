@@ -5,8 +5,7 @@ import sqlite3
 
 ### Create a database
 conn = sqlite3.connect('X:\DB\my_database.sqlite')
-
-# Below is a temporary DB that can be used
+# Below is a temporary DB that can be used if needed
 #conn = sqlite3.connect(':memory:') 
 
 cur = conn.cursor()
@@ -31,13 +30,13 @@ for x in inputlist:
 
 #place csv in df, then df in SQL DB
 
-df0 = pd.read_csv(input0)
+apps = pd.read_csv(input0)
 df1 = pd.read_csv(input1)
 df2 = pd.read_csv(input2)
 df3 = pd.read_csv(input3)
 df4 = pd.read_csv(input4)
 
-df0.to_sql(name='Apps', con=conn, if_exists='replace')
+apps.to_sql(name='Apps', con=conn, if_exists='replace')
 df1.to_sql(name='descriptionfile1', con=conn, if_exists='replace')
 df2.to_sql(name='descriptionfile2', con=conn, if_exists='replace')
 df3.to_sql(name='descriptionfile3', con=conn, if_exists='replace')
@@ -46,6 +45,24 @@ df4.to_sql(name='descriptionfile4', con=conn, if_exists='replace')
 # Union all description tables into 1 table 
 
 ### NEED TO CREATE CONTROL TABLE WITH COUNTS OF 4 DESC TABLES
+
+df_desc = pd.concat([df1, df2, df3, df4], ignore_index=True)
+
+num_rows_desc = len(df_desc)
+print(num_rows_desc)
+
+num_rows_apps = len(apps)
+print(num_rows_apps)
+
+column_names0 = apps.columns.tolist()
+column_names1 = df1.columns.tolist()
+print(column_names0)
+print(column_names1)
+
+
+print(apps.head(0))
+print(df1.head(0))
+
 
 cur.executescript("""
 DROP TABLE IF EXISTS Descriptionfile;                 
@@ -73,13 +90,11 @@ cur.execute('SELECT * FROM Apps')
 # Get the column names from the cursor object's description attribute
 column_names = cur.description
 
-
 # Print the column names
 for column_name in column_names:
     print(column_name[0])
 
 # print column names for Descriptionfile table
-
 
 cur.execute('SELECT * FROM Descriptionfile')
 column_names = cur.description
